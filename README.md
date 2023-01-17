@@ -1,4 +1,4 @@
-A [Prettier](https://prettier.io/) plugin for Tailwind CSS v3.0+ and [Tailwind Styled-Components](https://www.npmjs.com/package/tailwind-styled-components) v2.2.0+ that automatically sorts classes based on [the recommended class order](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier#how-classes-are-sorted).
+A [Prettier](https://prettier.io/) plugin for Tailwind CSS v3.0+ and [Tailwind Styled-Components](https://www.npmjs.com/package/tailwind-styled-components) v2.2.0+ that automatically sorts classes based on [the recommended class order](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier#how-classes-are-sorted). This plugin is based on the official [Tailwind CSS prettier plugin](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 
 ## Installation
 
