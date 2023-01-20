@@ -35,3 +35,14 @@ export const ContainerG = tw.div`
 `;
 
 export const ContainerH = tw.div``;
+
+export const ContainerI = tw.div`
+${() => fixedComponentCss}
+  flex
+  flex-row
+`;
+
+export const ContainerJ = tw.div`${() => fixedComponentCss}
+  flex
+  flex-col
+`;

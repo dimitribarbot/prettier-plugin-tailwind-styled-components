@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-tailwind-styled-components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Prettier plugin for sorting and formatting Tailwind CSS classes when using Tailwind Styled-Components.",
   "license": "MIT",
   "main": "dist/index.js",

@@ -158,6 +158,11 @@ function transformLitteral(
     newValue = insertLineBreakAtEnd(newValue, options, withIndentationAtEnd)
     return newValue
   }
+  if (withIndentationAtEnd) {
+    let newValue = normalizeLitteral(value)
+    newValue = insertLineBreakAtEnd(newValue, options, withIndentationAtEnd)
+    return newValue
+  }
   return value
 }
 
