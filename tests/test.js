@@ -1,18 +1,24 @@
-const fs = require('fs')
+const prettier = require('prettier')
 const path = require('path')
-const { execSync } = require('child_process')
+const fs = require('fs')
+const { exec } = require('child_process')
+const { promisify } = require('util')
+const execAsync = promisify(exec)
 
-function formatFixture(name) {
+async function formatFixture(name) {
   let binPath = path.resolve(__dirname, '../node_modules/.bin/prettier')
   let filePath = path.resolve(__dirname, `fixtures/${name}/example.styles.ts`)
-  return execSync(
-    `${binPath} ${filePath} --plugin-search-dir ${__dirname} --plugin ${path.resolve(
-      __dirname,
-      '..'
-    )}`
-  )
-    .toString()
-    .trim()
+  let pluginPath = path.resolve(__dirname, '../dist/index.js')
+
+  let cmd
+
+  if (prettier.version.startsWith('2.')) {
+    cmd = `${binPath} ${filePath} --plugin-search-dir ${__dirname} --plugin ${pluginPath}`
+  } else {
+    cmd = `${binPath} ${filePath} --plugin ${pluginPath}`
+  }
+
+  return execAsync(cmd).then(({ stdout }) => stdout.trim())
 }
 
 function fixtureExpectedOutput(name) {
@@ -20,22 +26,22 @@ function fixtureExpectedOutput(name) {
   return fs.readFileSync(filePath).toString().trim()
 }
 
-test('no prettier config', () => {
+test('no prettier config', async () => {
   const fixtureName = 'no-prettier-config'
-  expect(formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
+  expect(await formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
 })
 
-test('inferred config path', () => {
+test('inferred config path', async () => {
   const fixtureName = 'basic'
-  expect(formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
+  expect(await formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
 })
 
-test('inferred config path (.cjs)', () => {
+test('inferred config path (.cjs)', async () => {
   const fixtureName = 'cjs'
-  expect(formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
+  expect(await formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
 })
 
-test('plugins', () => {
+test('plugins', async () => {
   const fixtureName = 'plugins'
-  expect(formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
+  expect(await formatFixture(fixtureName)).toEqual(fixtureExpectedOutput(fixtureName))
 })

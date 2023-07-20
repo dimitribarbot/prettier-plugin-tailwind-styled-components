@@ -1,25 +1,27 @@
 const prettier = require('prettier')
 const path = require('path')
 
-function format(str, options = {}) {
-  return prettier
-    .format(str, {
-      pluginSearchDirs: [__dirname], // disable plugin autoload
-      plugins: [
-        path.resolve(__dirname, '..'),
-      ],
-      semi: false,
-      singleQuote: true,
-      printWidth: 9999,
-      parser: 'html',
-      ...options,
-    })
-    .trim()
+async function format(str, options = {}) {
+  let result = await prettier.format(str, {
+    pluginSearchDirs: [__dirname], // disable plugin autoload
+    semi: false,
+    singleQuote: true,
+    printWidth: 9999,
+    parser: 'html',
+    ...options,
+    plugins: [
+      ...options.plugins ?? [],
+      path.resolve(__dirname, '../dist/index.js')
+    ],
+  })
+
+  return result.trim()
 }
 
 
 let tests = [
   {
+    versions: [2],
     plugins: [
       '@trivago/prettier-plugin-sort-imports',
     ],
@@ -49,6 +51,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-organize-imports',
     ],
@@ -75,6 +78,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-import-sort',
     ],
@@ -93,6 +97,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-jsdoc',
     ],
@@ -106,6 +111,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-css-order',
     ],
@@ -119,6 +125,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-style-order',
     ],
@@ -132,6 +139,7 @@ let tests = [
     }
   },
   {
+    versions: [2],
     plugins: [
       'prettier-plugin-organize-attributes',
     ],
@@ -149,15 +157,25 @@ let tests = [
 for (const group of tests) {
   let name = group.plugins.join(', ')
 
+  let canRun = prettier.version.startsWith('2.')
+    ? group.versions.includes(2)
+    : group.versions.includes(3)
+
   for (let parser in group.tests) {
-    test(`parsing ${parser} works with: ${name}`, () => {
+    if (!canRun) {
+      test.todo(`parsing ${parser} works with: ${name}`)
+      continue
+    }
+
+    test(`parsing ${parser} works with: ${name}`, async () => {
       let plugins = [
         ...group.plugins.map(name => require.resolve(name)),
-        path.resolve(__dirname, '..'),
+        path.resolve(__dirname, '../dist/index.js'),
       ]
 
       for (const [input, expected] of group.tests[parser]) {
-        expect(format(input, { parser, plugins, ...group.options })).toEqual(expected)
+        let output = await format(input, { parser, plugins, ...group.options })
+        expect(output).toEqual(expected)
       }
     })
   }

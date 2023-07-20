@@ -19,8 +19,8 @@ export const ContainerD = tw.div`
 `;
 
 export const ContainerE = tw.div`
-  h-24
   line-clamp-1
+  h-24
   sm:line-clamp-2
   lg:h-48
 `;
