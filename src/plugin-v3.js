@@ -1,6 +1,6 @@
 import escalade from 'escalade/sync'
-import requireFrom from 'import-from'
-import requireFresh from 'import-fresh'
+import resolveFrom from 'resolve-from'
+import clearModule from 'clear-module'
 import objectHash from 'object-hash'
 import * as path from 'path'
 import prettier from 'prettier'
@@ -11,6 +11,7 @@ import * as prettierParserFlow from 'prettier/plugins/flow'
 import * as prettierParserTypescript from 'prettier/plugins/typescript'
 import { createContext as createContextFallback } from 'tailwindcss/lib/lib/setupContextUtils'
 import resolveConfigFallback from 'tailwindcss/resolveConfig'
+import loadConfigFallback from 'tailwindcss/loadConfig'
 
 const basePlugins = getBasePlugins()
 
@@ -257,8 +258,8 @@ function getTailwindStyledComponentImportName(ast) {
   return defaultImportSpecifier?.local?.name
 }
 
-function getConfigBaseDir(options) {
-  const prettierConfigPath = prettier.resolveConfigFile.sync(options.filepath)
+async function getConfigBaseDir(options) {
+  const prettierConfigPath = await prettier.resolveConfigFile(options.filepath)
 
   if (options.tailwindConfig) {
     return prettierConfigPath ? path.dirname(prettierConfigPath) : process.cwd()
@@ -285,33 +286,47 @@ function getTailwindConfigPath(baseConfigDir, options) {
       if (names.includes('tailwind.config.cjs')) {
         return 'tailwind.config.cjs'
       }
+      if (names.includes('tailwind.config.mjs')) {
+        return 'tailwind.config.mjs'
+      }
+      if (names.includes('tailwind.config.ts')) {
+        return 'tailwind.config.ts'
+      }
     })
   } catch {}
 
-  return configPath
+  if (configPath) {
+    return configPath
+  }
+
+  return null
 }
 
-function getTailwindConfig(tailwindConfigPath) {
-  const tailwindConfig = tailwindConfigPath ? requireFresh(tailwindConfigPath) : {}
-
-  // suppress "empty content" warning
-  tailwindConfig.content = ['no-op']
-
-  return tailwindConfig
-}
-
-function getTailwindContext(options) {
+async function getTailwindContext(options) {
   let resolveConfig = resolveConfigFallback
   let createContext = createContextFallback
+  let loadConfig = loadConfigFallback
 
-  const baseDir = getConfigBaseDir(options)
+  const baseDir = await getConfigBaseDir(options)
   const tailwindConfigPath = getTailwindConfigPath(baseDir, options)
-  const tailwindConfig = getTailwindConfig(tailwindConfigPath)
 
   try {
-    resolveConfig = requireFrom(baseDir, 'tailwindcss/resolveConfig')
-    createContext = requireFrom(baseDir, 'tailwindcss/lib/lib/setupContextUtils').createContext
+    let pkgDir = path.dirname(resolveFrom(baseDir, 'tailwindcss/package.json'))
+
+    resolveConfig = require(path.join(pkgDir, 'resolveConfig'))
+    createContext = require(path.join(pkgDir, 'lib/lib/setupContextUtils')).createContext
+
+    // Prior to `tailwindcss@3.3.0` this won't exist so we load it last
+    loadConfig = require(path.join(pkgDir, 'loadConfig'))
   } catch {}
+
+  clearModule(tailwindConfigPath)
+
+  const loadedConfig = loadConfig(tailwindConfigPath)
+  const tailwindConfig = loadedConfig.default ?? loadedConfig
+  
+  // suppress "empty content" warning
+  tailwindConfig.content = ['no-op']
 
   const existing = contextMap.get(tailwindConfigPath)
   const hash = objectHash(tailwindConfig)
@@ -370,8 +385,8 @@ function getCompatibleParser(parserFormat, options) {
   return parser
 }
 
-function transformJavaScript(ast, options) {
-  const tailwindContext = getTailwindContext(options)
+async function transformJavaScript(ast, options) {
+  const tailwindContext = await getTailwindContext(options)
 
   const tailwindStyledComponentsImportName = getTailwindStyledComponentImportName(ast)
   if (tailwindStyledComponentsImportName) {
@@ -403,7 +418,7 @@ function createParser(parserFormat, transform) {
 
       const ast = await original.parse(text, options)
 
-      transform(ast, options)
+      await transform(ast, options)
 
       return ast
     },
