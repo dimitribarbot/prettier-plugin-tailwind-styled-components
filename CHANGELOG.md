@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
-## [0.0.2] - 2023-01-20
+## [0.0.4] - 2023-07-20
 
 ### Fixed
 
-- Fix issue with expression formatting
+- Fix issue with prettier config async loading
 
 ## [0.0.3] - 2023-07-20
 
@@ -21,11 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Prettier v3 support
 
-## [0.0.4] - 2023-07-20
+## [0.0.2] - 2023-01-20
 
 ### Fixed
 
-- Fix issue with prettier config async loading
+- Fix issue with expression formatting
 
 [unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v0.0.4...HEAD
 [0.0.4]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v0.0.3...v0.0.4
