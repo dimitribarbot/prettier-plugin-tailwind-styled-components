@@ -10,7 +10,7 @@ npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-tailwind-sty
 
 Then add these plugins to your [Prettier configuration](https://prettier.io/docs/en/configuration.html):
 
-```json
+```json5
 // .prettierrc
 {
   "plugins": [
@@ -34,7 +34,7 @@ When using Tailwind CSS v4 you must specify your CSS file entry point, which inc
 
 Note that paths are resolved relative to the Prettier configuration file.
 
-```json
+```json5
 // .prettierrc
 {
   "tailwindStylesheet": "./resources/css/app.css"
@@ -49,7 +49,7 @@ By default the plugin will look for this file in the same directory as your Pret
 
 Note that paths are resolved relative to the Prettier configuration file.
 
-```json
+```json5
 // .prettierrc
 {
   "tailwindConfig": "./styles/tailwind.config.js"
@@ -62,7 +62,7 @@ If a local configuration file cannot be found the plugin will fallback to the de
 
 To sort classes in template literals as `tailwind-styled-components` you can use the `tailwindFunctions` option, which takes a list of function names:
 
-```json
+```json5
 // .prettierrc
 {
   "tailwindFunctions": ["tw"]
@@ -88,7 +88,7 @@ This plugin automatically removes duplicate classes from your class lists. Howev
 
 If removing duplicate classes is causing issues in your project, you can use the `tailwindPreserveDuplicates` option to disable this behavior:
 
-```json
+```json5
 // .prettierrc
 {
   "tailwindPreserveDuplicates": true
@@ -126,7 +126,7 @@ import tw from "@/lib/tailwindStyledComponents";
 
 To allow your own import statement to work with this plugin, you have to add this configuration to your prettier configuration file:
 
-```json
+```json5
 // .prettierrc
 {
   "tailwindStyledComponentsImport": "@/lib/tailwindStyledComponents"
@@ -154,7 +154,7 @@ This plugin uses Prettier APIs that can only be used by one plugin at a time, ma
 
 One limitation with this approach is that `prettier-plugin-tailwindcss` and `prettier-plugin-tailwind-styled-components` _must_ be loaded last.
 
-```json
+```json5
 // .prettierrc
 {
   // ..
