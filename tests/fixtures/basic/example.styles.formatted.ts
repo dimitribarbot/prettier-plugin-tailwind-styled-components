@@ -37,9 +37,9 @@ export const ContainerF = tw.div`
 
 export const ContainerG = tw.div`
   w-80
-  max-w-xs
-  ${() => fixedComponentCss}
   lg:w-96
+  ${() => fixedComponentCss}
+  max-w-xs
 `;
 
 export const ContainerH = tw.div``;

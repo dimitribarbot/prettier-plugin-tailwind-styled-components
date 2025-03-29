@@ -1,0 +1,8 @@
+{
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "tailwindStyledComponentsImport": "tailwind-styled-components",
+  "tailwindStylesheet": "./tests/fixtures/basic/tailwind.css",
+  "tailwindFunctions": ["tw"],
+  "plugins": ["prettier-plugin-tailwindcss", "./dist/index.mjs"]
+}
