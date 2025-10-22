@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
+## [2.0.0] - 2025-10-22
+
+### Feature
+
+- Upgrade package and node versions and make tailwind-styled-components dependency optional
+
 ## [1.0.0] - 2025-03-29
 
 ### Feature
@@ -33,8 +39,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix issue with expression formatting
 
-[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v1.0.0...HEAD
-[0.0.4]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v1.0.0...v0.0.4
+[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.0...v1.0.0
+[1.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v1.0.0...v0.0.4
 [0.0.4]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/21dc923c300729789a998bbedfbb2f54b7ef04a6...v0.0.2
