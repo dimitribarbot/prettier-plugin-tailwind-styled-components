@@ -33,27 +33,32 @@
     "format": "prettier \"src/**/*.js\" \"tests/test.js\" --write --print-width 100 --single-quote --no-semi --plugin-search-dir ./tests"
   },
   "devDependencies": {
-    "@types/node": "^22.13.14",
-    "cpy-cli": "^5.0.0",
-    "esbuild": "^0.25.1",
-    "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "0.6.11",
+    "@types/node": "^24.9.1",
+    "cpy-cli": "^6.0.0",
+    "esbuild": "^0.25.11",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "0.7.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "rimraf": "^6.0.1",
+    "styled-components": "^6.1.19",
     "tailwind-styled-components": "^2.2.0",
-    "tailwindcss": "^4.0.17",
+    "tailwindcss": "^4.1.15",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "prettier": "^3.0",
-    "prettier-plugin-tailwindcss": ">=0.6.11",
-    "tailwind-styled-components": ">=2.2.0"
+    "prettier-plugin-tailwindcss": "^0.7"
+  },
+  "optionalDependencies": {
+    "tailwind-styled-components": "^2.2.0"
   },
   "engines": {
-    "node": ">=14.21.3"
+    "node": ">=20.19"
   },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {

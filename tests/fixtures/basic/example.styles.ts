@@ -1,12 +1,22 @@
 import tw from "tailwind-styled-components";
+import styled from "styled-components";
+
+const StyledComponentContainer = styled.section`
+background-color: #0366d6;
+color: #012552;
+`;
 
 const Container = tw.div`h-32 lg:h-72`;
 
 export const ContainerB = tw(Container)`
 text-lg
+flex-col
+flex
 `;
 
 export const ContainerC = tw(Container)<{ $active: boolean }>`
+  text-lg
+  flex-col
   flex
 `;
 
@@ -43,6 +53,11 @@ ${() => fixedComponentCss}
 `;
 
 export const ContainerJ = tw.div`${() => fixedComponentCss}
+  flex
+  flex-col
+`;
+
+export const ContainerK = tw(StyledComponentContainer)`
   flex
   flex-col
 `;
