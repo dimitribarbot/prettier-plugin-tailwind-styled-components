@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
+## [2.0.1] - 2025-10-22
+
+### Fixed
+
+- Add react and react-dom as optional dependencies required by tailwind-styled-components
+
 ## [2.0.0] - 2025-10-22
 
 ### Feature
