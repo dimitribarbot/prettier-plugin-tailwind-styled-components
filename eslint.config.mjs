@@ -1,16 +1,9 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { defineConfig, globalIgnores } from "eslint/config";
+import prettier from "eslint-config-prettier/flat";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
+const eslintConfig = defineConfig([
+  prettier,
+  globalIgnores(["node_modules/**", "dist/**"])
+]);
 
-const config = [...compat.extends("prettier")];
-
-export default config;
+export default eslintConfig;

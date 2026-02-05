@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
+## [2.0.2] - 2026-02-05
+
+### Fixed
+
+- Fix an issue where the tailwind-styled-components plugin is not found
+
 ## [2.0.1] - 2025-10-22
 
 ### Fixed
@@ -45,7 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix issue with expression formatting
 
-[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.2...v2.0.1
+[2.0.1]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.1...v2.0.0
 [2.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.0...v1.0.0
 [1.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v1.0.0...v0.0.4
 [0.0.4]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v0.0.3...v0.0.4

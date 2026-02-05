@@ -255,6 +255,9 @@ const transform = async (ast: any, options: ParserOptions<any>) => {
   );
 };
 
+const sanitizePath = (path: string | undefined) =>
+  path?.toLocaleLowerCase().replaceAll("\\", "/");
+
 const getCompatibleParser = (
   baseParser: Parser,
   options: ParserOptions<any>
@@ -276,11 +279,17 @@ const getCompatibleParser = (
     return parser;
   }
 
-  const plugin = options.plugins.find(
-    plugin =>
-      (plugin as any).name === tailwindCssPluginName ||
-      (plugin as any).name === path
-  );
+  const sanitizedPath = sanitizePath(path);
+  const sanitizedFilePath = `file:///${sanitizedPath}`;
+
+  const plugin = options.plugins.find(plugin => {
+    const pluginSanitizedPath = sanitizePath((plugin as any).name);
+    return (
+      pluginSanitizedPath === tailwindCssPluginName ||
+      pluginSanitizedPath === sanitizedPath ||
+      pluginSanitizedPath === sanitizedFilePath
+    );
+  });
 
   if (!plugin) {
     return parser;
