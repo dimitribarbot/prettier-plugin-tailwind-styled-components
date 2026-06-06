@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "prettier-plugin-tailwind-styled-components",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A Prettier plugin for sorting and formatting Tailwind CSS classes when using Tailwind Styled-Components.",
   "license": "MIT",
   "main": "dist/index.mjs",
@@ -39,8 +39,8 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "rimraf": "^6.1.2",
     "styled-components": "^6.3.8",
     "tailwind-styled-components": "^2.2.0",
@@ -51,12 +51,12 @@
   },
   "peerDependencies": {
     "prettier": "^3.0",
-    "prettier-plugin-tailwindcss": "^0.7"
+    "prettier-plugin-tailwindcss": "^0.x"
   },
   "optionalDependencies": {
     "tailwind-styled-components": "^2.2.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "engines": {
     "node": ">=20.19"
