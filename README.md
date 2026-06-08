@@ -170,3 +170,17 @@ One limitation with this approach is that `prettier-plugin-tailwindcss` and `pre
 ## Migrating from v0 version
 
 This plugin now relies entirely on the `prettier-plugin-tailwindcss` plugin. You have to add it as a dev-dependency in your `package.json` and add it to your Prettier configuration file plugin section as specified in the [installation](#installation) section.
+
+## Migrating from v2 version
+
+As of v3.0.0, this plugin requires `prettier-plugin-tailwindcss` **v0.8.0 or later**.
+
+Starting with v0.8.0, `prettier-plugin-tailwindcss` changed the way it exposes its parsers: they are now lazily-loaded functions instead of plain parser objects. This broke the class sorting integration in previous versions of this plugin (the styled-components formatting still ran, but Tailwind classes were no longer sorted). v3.0.0 adapts to this new format and restores class sorting.
+
+When upgrading to v3.0.0, make sure to bump `prettier-plugin-tailwindcss` to at least v0.8.0:
+
+```sh
+npm install -D prettier-plugin-tailwindcss@^0.8.0
+```
+
+If you need to keep using `prettier-plugin-tailwindcss` below v0.8.0, stay on the v2.x release of this plugin.

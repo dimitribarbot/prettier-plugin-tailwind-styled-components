@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
+## [3.0.0] - 2026-06-08
+
+### Changed
+
+- Require prettier-plugin-tailwindcss v0.8.0 or later
+
+### Fixed
+
+- Fix Tailwind class sorting no longer running with prettier-plugin-tailwindcss v0.8.0+, whose parsers are now exposed as lazily-loaded functions
+
 ## [2.0.5] - 2026-06-08
 
 ### Fixed
@@ -69,7 +79,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix issue with expression formatting
 
-[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.2...HEAD
+[unreleased]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v3.0.0...v2.0.5
+[2.0.5]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.5...v2.0.4
+[2.0.4]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.4...v2.0.3
+[2.0.3]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.3...v2.0.2
 [2.0.2]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.2...v2.0.1
 [2.0.1]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.1...v2.0.0
 [2.0.0]: https://github.com/dimitribarbot/prettier-plugin-tailwind-styled-components/compare/v2.0.0...v1.0.0

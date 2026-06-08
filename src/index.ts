@@ -5,6 +5,16 @@ import * as prettierParserFlow from "prettier/plugins/flow";
 import * as prettierParserMeriyah from "prettier/plugins/meriyah";
 import * as prettierParserTypescript from "prettier/plugins/typescript";
 
+// `require` is provided at build time by the CJS interop shim in build.mjs
+// (see patchCjsInterop, which prepends `const require = createRequire(...)`).
+// Declaring it here keeps type-checking independent of whether the ambient
+// Node typings are resolved by a given editor/tsserver setup. As a type-only
+// declaration it is fully erased by esbuild, so it does not clash with the
+// injected runtime `require`.
+declare const require: {
+  resolve(id: string): string;
+};
+
 const visit = (ast: any, callbackMap: Function | Record<string, Function>) => {
   const _visit = (
     node: any,
@@ -255,10 +265,38 @@ const transform = async (ast: any, options: ParserOptions<any>) => {
   );
 };
 
-const sanitizePath = (path: string | undefined) =>
+const sanitizePath = (path: string | null | undefined) =>
   path?.toLocaleLowerCase().replaceAll("\\", "/");
 
-const getCompatibleParser = (
+const resolveTailwindCssParser = async (
+  plugin: Plugin<any>,
+  options: ParserOptions<any>
+) => {
+  if (!plugin.parsers) {
+    return undefined;
+  }
+
+  // Pick the parser matching the language currently being formatted, falling
+  // back to `typescript` so older behavior is preserved when `options.parser`
+  // is unavailable or unknown to prettier-plugin-tailwindcss.
+  const parserName = options.parser;
+  const tailwindCssParser: any =
+    (typeof parserName === "string" ? plugin.parsers[parserName] : undefined) ??
+    plugin.parsers.typescript;
+
+  // prettier-plugin-tailwindcss >= 0.8 no longer exposes a plain parser
+  // object. Each parser is now a lazy async loader function that builds and
+  // returns the real parser (including its class-sorting `parse`/`preprocess`)
+  // when invoked with no arguments. Versions < 0.8 expose the parser object
+  // directly. Invoke the loader so its sorting logic can be merged in.
+  if (typeof tailwindCssParser === "function") {
+    return await tailwindCssParser();
+  }
+
+  return tailwindCssParser;
+};
+
+const getCompatibleParser = async (
   baseParser: Parser,
   options: ParserOptions<any>
 ) => {
@@ -295,22 +333,27 @@ const getCompatibleParser = (
     return parser;
   }
 
-  Object.assign(parser, (plugin as Plugin<any>).parsers?.typescript);
+  const tailwindCssParser = await resolveTailwindCssParser(
+    plugin as Plugin<any>,
+    options
+  );
+
+  Object.assign(parser, tailwindCssParser);
 
   return parser;
 };
 
 export const createParser = async (parser: Parser) => ({
   ...parser,
-  preprocess(code: string, options: ParserOptions<any>) {
-    const original = getCompatibleParser(parser, options);
+  async preprocess(code: string, options: ParserOptions<any>) {
+    const original = await getCompatibleParser(parser, options);
     if (original.preprocess) {
       return original.preprocess(code, options);
     }
     return code;
   },
   async parse(text: string, options: ParserOptions<any>) {
-    const original = getCompatibleParser(parser, options);
+    const original = await getCompatibleParser(parser, options);
     const ast = await original.parse(text, options);
     await transform(ast, options);
     return ast;
