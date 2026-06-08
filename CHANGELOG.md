@@ -9,13 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet!
 
-## [2.0.4] - 2026-06-06
+## [2.0.5] - 2026-06-08
+
+### Fixed
+
+- Rollback prettier-plugin-tailwindcss dependency upgrade as versions are not compatible
+
+## [2.0.4] - 2026-06-06 - Deprecated
 
 ### Fixed
 
 - Fix prettier dependency warning
 
-## [2.0.3] - 2026-06-06
+## [2.0.3] - 2026-06-06 - Deprecated
 
 ### Fixed
 
